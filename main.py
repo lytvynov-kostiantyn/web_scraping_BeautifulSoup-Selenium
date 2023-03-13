@@ -2,7 +2,7 @@ from bs4 import BeautifulSoup
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from time import sleep
-
+import json
 import re
 
 # Url for scraping
@@ -24,6 +24,7 @@ target_btn.click()
 
 response = driver.page_source
 driver.quit()
+
 
 # Beautiful Soup for extracting data
 soup = BeautifulSoup(response, 'lxml')
@@ -55,3 +56,7 @@ CONTACT_INF['instagram'] = re.findall(r'http[s]?://www\.instagram\.com/\S[^\"]*'
 # Getting tiktok
 CONTACT_INF['tiktok'] = re.findall(r'http[s]?://www\.tiktok\.com/\S[^\"]*', data)
 
+
+# Writing information to JSON file
+with open('contact_inf_eldorado.json', 'w') as file:
+    json.dump(CONTACT_INF, file, indent=4)
